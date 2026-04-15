@@ -1,0 +1,15 @@
+==================================================
+SESSION 16: READINESS INVENTORY
+==================================================
+Operator: Wesley Martinez-Close
+Date: April 15, 2026
+
+Confidence Audit (Yes/No):
+1. Nmap (Network Scanning): [Yes ]
+2. Docker (Containerization): [No]
+3. Linux Hardening (UFW/chmod): [Yes ]
+4. VS Code Remote-SSH: [Yes ]
+
+Identify your weakest area and your plan to review it:
+I need to better understand containerization. Although I completed the assignment, I still need to better my understanding of the commands such as docker ps
+==================================================
