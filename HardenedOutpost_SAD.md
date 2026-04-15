@@ -7,8 +7,7 @@
 
 Disabled root login and password authentication by modifying /etc/ssh/sshd_config
 i.e. (setting PermitRootLogin no and PasswordAuthentication no). 
-Restarted the SSH service to enforce changes.
-
+Restarted the SSH service to enforce change
 * **Firewall Logic:** 
 
 Firewall Logic: > * Default Policy: Deny (incoming), Allow (outgoing)
@@ -20,19 +19,21 @@ Closed Ports: All other incoming ports are implicitly denied by the default poli
 * **Script Logic:**
 
 import os
-from datetime import datetime
 
-command = "df -h"
-log_path = "/var/log/sys_audit.log"
+# Define the target IP (Ensure TITAN-DC01 is actually ON for this test)
+dc_ip = "192.168.1.81"
+log_path = "/var/log/dc_audit.log"
 
-try:
-    output = os.popen(command).read()
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(log_path, "a") as log_file:
-        log_file.write(f"--- Audit at {timestamp} ---\n{output}\n")
-    print(f"Audit successful. Data appended to {log_path}")
-except Exception as e:
-    print(f"Error: {e}")
+# Pings the DC 4 times (-c 4)
+# We use > /dev/null to keep the console clean
+response = os.system(f"ping -c 4 {dc_ip} > /dev/null 2>&1")
+
+# Open the log file in append mode ('a')
+with open(log_path, "a") as log_file:
+    if response == 0:
+        log_file.write("DC is UP\n")
+    else:
+        log_file.write("DC is DOWN\n")
 
 * **Telemetry Path:** `/var/log/sys_audit.log`
 
